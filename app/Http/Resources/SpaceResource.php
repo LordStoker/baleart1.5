@@ -44,7 +44,7 @@ class SpaceResource extends JsonResource
                     $this->address->municipality->island->name ?? null,
                 ]));
             }),
-            'Tipodeespacio' => $this->space_type->name,
+            'Tipodeespacio' => $this->space_type->description_ES,
             'Fecha de creación' => Carbon::parse($this->created_at)->format("d-m-Y h:m:s"),
             'Última actualización' => Carbon::parse($this->created_at)->format("d-m-Y h:m:s"),
             'UsuarioGestor' => new UserResource($this->whenLoaded('user')),
