@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\User;
 use App\Models\Image;
 
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
         //Factories
         User::factory(100)->create();
         Image::factory(100)->create();
+        Comment::factory(100)->create();
 
     }
 }

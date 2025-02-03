@@ -26,7 +26,7 @@ class SpaceResource extends JsonResource
         return [
             'Identificador' => $this->id,
             'Nombre' => $this->name,
-            'Nº Registro' => $this->regNumber,
+            'NºRegistro' => $this->regNumber,
             'Detalles_CA' => $this->observation_CA,
             'Detalles_ES' => $this->observation_ES,
             'Detalles_EN' => $this->observation_EN,
