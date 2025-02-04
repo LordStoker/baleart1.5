@@ -18,7 +18,7 @@ class ModalityResource extends JsonResource
         // return parent::toArray($request);
         return[
             'Identificador' => $this->id,
-            'Nombre' => $this->name,
+            'Nombre' => $this->description_ES,
             'Nombre_CA' => $this->description_CA,
             'Nombre_ES' => $this->description_ES,
             'Nombre_EN' => $this->description_EN,

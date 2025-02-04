@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             
             $table->id();
-            $table->string('url', 100);
+            $table->string('url', 1000);
             $table->foreignId('comment_id')->constrained('comments')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });

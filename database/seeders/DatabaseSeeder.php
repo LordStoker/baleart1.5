@@ -38,12 +38,15 @@ class DatabaseSeeder extends Seeder
         $this->call(SpaceTypesSeeder::class);
         $this->call(ServiceSeeder::class);
         $this->call(Space_Address_PivotsSeeder::class);
-        $this->call(CommentSeeder::class);
 
         //Factories
         User::factory(100)->create();
-        Image::factory(100)->create();
         Comment::factory(100)->create();
+        $this->call(CommentSeeder::class);
+        $this->call(ImageSeeder::class);
+
+        //Factories
+
 
     }
 }
