@@ -19,9 +19,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/perfilview/{nom}', function($nom){
+    return view('perfil', ['nom' => $nom]);
+});
+
+Route::get('/perfilusuari/{usuari}', function(User $usuari) {
+    return view('perfiluser',['user'=>$usuari]);
+}); 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -59,18 +69,18 @@ Route::middleware('auth')->group(function () {
 // }); 
 
 //Ejemplo de Route con un parámetro en la URI
-Route::get('/hola/{nom}',function($nom) {
-    return '<h1>Hola '.$nom.' estás en un Mundo Cruel</h1>';
-})->name('holanom');  // Veremos esto más adelante, es un alias
+// Route::get('/hola/{nom}',function($nom) {
+//     return '<h1>Hola '.$nom.' estás en un Mundo Cruel</h1>';
+// })->name('holanom');  // Veremos esto más adelante, es un alias
 
 // http://example-app.test/hola/Tomeu
 
 // A veces, el parámetro será opcional
 // Route con dos parámetros, uno de ellos opcional con valor por defecto
 
-Route::get('/hola/{nom}/{professio?}',function($nom, $professio = null) {
-	return '<h1>Hola '.$nom.' que eres '.$professio.' estás en un Mundo Cruel</h1>';
-})->name('nomprof'); // Veremos esto más adelante, es un alias
+// Route::get('/hola/{nom}/{professio?}',function($nom, $professio = null) {
+// 	return '<h1>Hola '.$nom.' que eres '.$professio.' estás en un Mundo Cruel</h1>';
+// })->name('nomprof'); // Veremos esto más adelante, es un alias
 
 // // Llamarlo mediante
 // http://<example-app.test>/hola/Tomeu/profesor
@@ -95,115 +105,124 @@ Route::get('/hola/{nom}/{professio?}',function($nom, $professio = null) {
 
 // La Route completa 'http://<example-app.test>/holanueva' ahora tiene un alias 
 //	este alias se denomina 'salutacio'
-Route::get('/holanueva',function() {
-    return '<h1>Hola Nueva</h1>';
-})->name('salutacio'); // Alias, se usará más adelante
+// Route::get('/holanueva',function() {
+//     return '<h1>Hola Nueva</h1>';
+// })->name('salutacio'); // Alias, se usará más adelante
 
 // Creamos una Route con un enlace insertado de manera manual
 // 	recordar que el {id} sigue afectado por la restricción definida en app>Providers>AppServiceProvider 
-Route::get('/perfilr1/{id}',function($id) {
-    return "<h3>Perfil Nº ".$id."<a href='/holanueva'>saluda a </a></h3>"; 
-}); 
+// Route::get('/perfilr1/{id}',function($id) {
+//     return "<h3>Perfil Nº ".$id."<a href='/holanueva'>saluda a </a></h3>"; 
+// }); 
 
-// Podemos simplificar la route utilizando el alias definido anteriormente
-Route::get('/perfilr2/{id}',function($id) {
-    return "<h3>Perfil Nº ".$id."<a href='".route('salutacio')."'>saluda a </a></h3>"; 
-}); 
+// // Podemos simplificar la route utilizando el alias definido anteriormente
+// Route::get('/perfilr2/{id}',function($id) {
+//     return "<h3>Perfil Nº ".$id."<a href='".route('salutacio')."'>saluda a </a></h3>"; 
+// }); 
 
 // Estos alias son útiles cuando estamos usando rutas complejas 
 // Se facilita el control de las rutas mediante el renombrado 
-Route::get('/lñajalkjasljkasflkjasfd',function() {
-    return '<h1>Hola de nuevo, ruta rara es lñajalkjasljkasflkjasfd</h1>';
-})->name('rutarara'); 
+// Route::get('/lñajalkjasljkasflkjasfd',function() {
+//     return '<h1>Hola de nuevo, ruta rara es lñajalkjasljkasflkjasfd</h1>';
+// })->name('rutarara'); 
 
-Route::get('/perfilr3/{id}',function($id) {
-    return "<h3>Perfil Nº".$id."<a href='".route('rutarara')."'>saluda</a></h3>"; 
-});
+// Route::get('/perfilr3/{id}',function($id) {
+//     return "<h3>Perfil Nº".$id."<a href='".route('rutarara')."'>saluda</a></h3>"; 
+// });
 
 // La llamada a la Route se hará con un parámetro
 // 	el parámetro se incluye mediante una array asociativo
-Route::get('/perfilr4/{id}',function($id) {
-    return "<h3>Perfil Nº".$id."<a href='".route('holanom',['nom'=>'Tommy'])."'>saluda</a></h3>"; 
-});
+// Route::get('/perfilr4/{id}',function($id) {
+//     return "<h3>Perfil Nº".$id."<a href='".route('holanom',['nom'=>'Tommy'])."'>saluda</a></h3>"; 
+// });
 
-// Ejemplo con varios parámetros (mediante un array asociativo)
-Route::get('/perfilr5/{id}',function($id) {
-    return "<h3>Perfil Nº".$id."<a href='".route('nomprof',['nom'=>'Tommy', 'professio'=>'Rascador de webos'])."'>saluda</a></h3>"; 
-});
+// // Ejemplo con varios parámetros (mediante un array asociativo)
+// Route::get('/perfilr5/{id}',function($id) {
+//     return "<h3>Perfil Nº".$id."<a href='".route('nomprof',['nom'=>'Tommy', 'professio'=>'Rascador de webos'])."'>saluda</a></h3>"; 
+// });
 
 // Definamos una agrupación: 
 // En este caso la ruta tiene un prefijo y la correcta será 'admin/hola'
 // Es bueno para aplicar redirección genérica de rutas (middleware, prefijos, subdominios, etc.) 
 
-Route::group(['prefix'=>'admin', 'as' => 'admin.'], function() {
+// Route::group(['prefix'=>'admin', 'as' => 'admin.'], function() {
     
-    Route::get('/hola/{nom}',function($nom) {
-        return '<h1>Hola '.$nom.' es agrupación</h1>';
-    })->name('saluda'); //dando nombre a la ruta, ya la tomará de manera correcta '/admin/hola'
+//     Route::get('/hola/{nom}',function($nom) {
+//         return '<h1>Hola '.$nom.' es agrupación</h1>';
+//     })->name('saluda'); //dando nombre a la ruta, ya la tomará de manera correcta '/admin/hola'
 
-    Route::get('/usuari/{nom}', function ($nom) {
-        return '<h1>Hola '.$nom.' es agrupación</h1>';
-    })->name('user'); 
-});
+//     Route::get('/usuari/{nom}', function ($nom) {
+//         return '<h1>Hola '.$nom.' es agrupación</h1>';
+//     })->name('user'); 
+// });
 
-// Usando redirección con agrupación
-// Observa como está redireccionada correctamente usando el alias de la ruta
-Route::get('/redireccion',function() {
-    return "<h3>Perfil Nº <a href='".route('admin.saluda',['nom'=>'Tommy'])."'>saluda</a></h3>"; 
-}); 
+// // Usando redirección con agrupación
+// // Observa como está redireccionada correctamente usando el alias de la ruta
+// Route::get('/redireccion',function() {
+//     return "<h3>Perfil Nº <a href='".route('admin.saluda',['nom'=>'Tommy'])."'>saluda</a></h3>"; 
+// }); 
 
-Route::get('/usuaris/{usuari}', function(User $usuari){
-    return $usuari; 
-}); 
+// Route::get('/usuaris/{usuari}', function(User $usuari){
+//     return $usuari; 
+// }); 
 
-Route::get('/space/{space}', function(Space $space){
-    return $space; 
-});
+// Route::get('/space/{space}', function(Space $space){
+//     return $space; 
+// });
 
-// Otro ejemplo con el Model Modalities 
-Route::get('/modalities/{modality}', function(Modality $modality){
-    return $modality; 
-});
+// // Otro ejemplo con el Model Modalities 
+// Route::get('/modalities/{modality}', function(Modality $modality){
+//     return $modality; 
+// });
 
-Route::get('/addresses/{address}', function(Address $address){
-    return $address; 
-}); 
+// Route::get('/addresses/{address}', function(Address $address){
+//     return $address; 
+// }); 
 
-Route::get('/comments/{comment}', function(Comment $comment){
-    return $comment; 
-}); 
+// Route::get('/comments/{comment}', function(Comment $comment){
+//     return $comment; 
+// }); 
 
-Route::get('/images/{image}', function(Image $image){
-    return $image; 
-}); 
+// Route::get('/images/{image}', function(Image $image){
+//     return $image; 
+// }); 
 
-Route::get('/islands/{island}', function(Island $island){
-    return $island; 
-}); 
+// Route::get('/islands/{island}', function(Island $island){
+//     return $island; 
+// }); 
 
-Route::get('/modalities/{modality}', function(Modality $modality){
-    return $modality; 
-}); 
+// Route::get('/modalities/{modality}', function(Modality $modality){
+//     return $modality; 
+// }); 
 
-Route::get('/municipalities/{municipality}', function(Municipality $municipality){
-    return $municipality; 
-}); 
+// Route::get('/municipalities/{municipality}', function(Municipality $municipality){
+//     return $municipality; 
+// }); 
 
-Route::get('/roles/{role}', function(Role $role){
-    return $role; 
-});
+// Route::get('/roles/{role}', function(Role $role){
+//     return $role; 
+// });
 
-Route::get('/services/{service}', function(Service $service){
-    return $service; 
-});
+// Route::get('/services/{service}', function(Service $service){
+//     return $service; 
+// });
 
-Route::get('/spacetypes/{spacetype}', function(SpaceType $spacetype){
-    return $spacetype; 
-});
+// Route::get('/spacetypes/{spacetype}', function(SpaceType $spacetype){
+//     return $spacetype; 
+// });
 
-Route::get('/zones/{zone}', function(Zone $zone){
-    return $zone; 
-});
+// Route::get('/zones/{zone}', function(Zone $zone){
+//     return $zone; 
+// });
+
+
+// // Refinamos la llamada para obtener por campos específicos en lugar del ID
+// // El iguiente ejemplo extrae por user_id en lugar de por ID
+// // Observar que solamente extraerá un registro. 
+// Route::get('/comment2/{comment:user_id}', function(Space $comment){
+//     //$space = Space::where('user_id', $user_id)->get();
+//     return $comment; 
+// }); 
 
 
 
