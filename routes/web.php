@@ -14,6 +14,8 @@ use App\Models\SpaceType;
 use App\Models\Municipality;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\View\SpaceController;
+use App\Http\Controllers\View\ServiceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +28,9 @@ Route::get('/perfilview/{nom}', function($nom){
 Route::get('/perfilusuari/{usuari}', function(User $usuari) {
     return view('perfiluser',['user'=>$usuari]);
 }); 
+
+Route::resource('/spaces', SpaceController::class);
+Route::resource('/services', ServiceController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
