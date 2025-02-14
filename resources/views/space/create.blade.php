@@ -6,11 +6,29 @@
     <title>Create Space</title>
 </head>
 <body>
+    @if (count($errors->all()) === 1)
+        <h2>Tenim 1 error</h2>
+    @elseif (count($errors->all()) > 1)
+        <h2>Tenim multiples errors</h2>
+    @else
+        <h2>No tenim cap error</h2> 
+    @endif
+
+     @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+  @endif
+
     <h3>Create Space</h3>
-    <form action="{{ route('spaces.store') }}" method="post">
+    <form action="{{ route('space.store') }}" method="post">
         @csrf <!-- Security Token --> 
-        <label for="title">Nombre</label>
-        <input type="text" name="nombre" />
+        <label for="name">Nombre</label>
+        <input type="text" name="name" />
 
         <label for="url_clean">Nº Registro</label>
         <input type="text" name="registro" />
@@ -31,13 +49,14 @@
         <input type="text" name="phone" />
 
         <label for="url_clean">Website</label>
-        <input type="text" name="url_clean" />
+        <input type="text" name="website" />
 
         <label for="url_clean">AccesType</label>
-        <input type="text" name="website" />
+        <input type="text" name="accesstype" />
          
     
         <input type="submit" value="Crear" >
     </form>
+    @dd($errors)
 </body>
 </html>

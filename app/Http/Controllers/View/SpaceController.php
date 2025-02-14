@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\View;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backoffice\GuardarSpaceRequest;
 use Illuminate\Http\Request;
 
 class SpaceController extends Controller
@@ -20,21 +21,24 @@ class SpaceController extends Controller
      */
     public function create()
     {
-        return view ('spaces.create');
+        return view ('space.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GuardarSpaceRequest $request)
     {
         echo "estoy en function store() de SpaceController";
         
-        echo 'nombre = '.$request->input('nombre').'<br>';
-        echo 'nombre = '.$request->nombre.'<br>';
-        echo 'nombre = '.request('nombre'); 
+        echo 'nombre = '.$request->input('name').'<br>';
+        echo 'nombre = '.$request->name.'<br>';
+        echo 'nombre = '.request('name'); 
+        // $request->validate([
+        //     'name' => 'required|unique:spaces|min:5|max:255',
+        // ]);
  
-        dd($request); // Desgrana el $request y lo pinta en pantalla
+        // dd($request); // Desgrana el $request y lo pinta en pantalla
     }
 
     /**

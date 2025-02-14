@@ -29,8 +29,8 @@ Route::get('/perfilusuari/{usuari}', function(User $usuari) {
     return view('perfiluser',['user'=>$usuari]);
 }); 
 
-Route::resource('/spaces', SpaceController::class);
-Route::resource('/services', ServiceController::class);
+Route::resource('/space', SpaceController::class);
+Route::resource('/service', ServiceController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

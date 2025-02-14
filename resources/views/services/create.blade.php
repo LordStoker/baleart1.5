@@ -7,7 +7,7 @@
 </head>
 <body>
     <h3>Create Service</h3>
-    <form action="{{ route('services.store') }}" method="post">
+    <form action="{{ route('service.store') }}" method="post">
         @csrf <!-- Security Token --> 
         <label for="title">Nombre</label>
         <input type="text" name="nombre" />
