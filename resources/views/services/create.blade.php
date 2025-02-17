@@ -6,20 +6,50 @@
     <title>Create Service</title>
 </head>
 <body>
+
+    @if (count($errors->all()) === 1)
+    <h2>Tenim 1 error</h2>
+@elseif (count($errors->all()) > 1)
+    <h2>Tenim multiples errors</h2>
+@else
+    <h2>No tenim cap error</h2> 
+@endif
+
+{{--  @if ($errors->any())
+  <div class="alert alert-danger">
+      <ul>
+          @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+          @endforeach
+      </ul>
+  </div>
+@endif --}}
     <h3>Create Service</h3>
     <form action="{{ route('service.store') }}" method="post">
         @csrf <!-- Security Token --> 
         <label for="title">Nombre</label>
-        <input type="text" name="nombre" />
+        <input type="text" style="@error('nombre') border-color:RED; @enderror" name="nombre" />
+        @error('nombre')
+        <div>{{$message}}</div>
+        @enderror     
 
         <label for="url_clean">Descripción_CA</label>
-        <input type="text" name="descripcion_ca" />
+        <input type="text" style="@error('descripcion_ca') border-color:RED; @enderror" name="descripcion_ca" />
+        @error('descripcion_ca')
+        <div>{{$message}}</div>
+        @enderror     
 
         <label for="url_clean">Descripción_ES</label>
-        <input type="text" name="descripcion_es" />
+        <input type="text" style="@error('descripcion_es') border-color:RED; @enderror" name="descripcion_es" />
+        @error('descripcion_es')
+        <div>{{$message}}</div>
+        @enderror     
 
         <label for="url_clean">Descripción_EN</label>
-        <input type="text" name="descripcion_en" />
+        <input type="text" style="@error('descripcion_en') border-color:RED; @enderror" name="descripcion_en" />
+        @error('descripcion_en')
+        <div>{{$message}}</div>
+        @enderror     
          
     
         <input type="submit" value="Crear" >

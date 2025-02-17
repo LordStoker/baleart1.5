@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\View;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BackOffice\GuardarService;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -26,9 +27,17 @@ class ServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GuardarService $request)
     {
         echo "estoy en function store() de ServiceController";
+
+        echo 'nombre = '.$request->input('name').'<br>';
+        echo 'nombre = '.$request->name.'<br>';
+        echo 'nombre = '.request('name');
+        // $request->validate([
+        //     'name' => 'required|unique:spaces|min:5|max:255',
+        // ]);
+        
     }
 
     /**

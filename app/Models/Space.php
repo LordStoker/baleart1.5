@@ -9,9 +9,30 @@ use App\Models\Service;
 use App\Models\Modality;
 use App\Models\SpaceType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Space extends Model
 {
+    use HasFactory;
+
+    public $fillable = [
+        'name',
+        'regNumber',
+        'observation_CA',
+        'observation_ES',
+        'observation_EN',
+        'email',
+        'phone',
+        'website',
+        'accessType',
+        'totalScore',
+        'countScore',
+        'address_id',
+        'space_type_id',
+        'user_id',
+    ];
+
+
     public function space_type()
     {
         return $this->belongsTo(SpaceType::class);

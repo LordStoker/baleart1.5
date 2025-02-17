@@ -23,8 +23,8 @@ class GuardarSpaceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string','min:5', 'max:255', new Uppercase],
-            'registro'=> 'required|unique:spaces|min:4|max:10',
+            'nombre' => ['required', 'string','min:5', 'max:255', new Uppercase],
+            'regNumber'=> 'required|unique:spaces|min:4|max:10',
             'descripcion_ca' => 'required|string|min:5|max:255',
             'descripcion_es' => 'required|string|min:5|max:255',
             'descripcion_en' => 'required|string|min:5|max:255',
@@ -43,10 +43,10 @@ class GuardarSpaceRequest extends FormRequest
             'name.string' => 'El campo nombre debe ser un texto',
             'name.max' => 'El campo nombre no puede tener más de 100 caracteres',
             'name.min' => 'El campo nombre debe tener al menos 5 caracteres',
-            'registro.required' => 'El campo registro es obligatorio',
-            'registro.unique' => 'El campo registro ya está en uso',
-            'registro.min' => 'El campo registro debe tener al menos 4 caracteres',
-            'registro.max' => 'El campo registro no puede tener más de 10 caracteres',
+            'regNumber.required' => 'El campo registro es obligatorio',
+            'regNumber.unique' => 'El campo registro ya está en uso',
+            'regNumber.min' => 'El campo registro debe tener al menos 4 caracteres',
+            'regNumber.max' => 'El campo registro no puede tener más de 10 caracteres',
             'descripcion_ca.required' => 'El campo descripción catalán es obligatorio',
             'descripcion_ca.string' => 'El campo descripción catalán debe ser un texto',
             'descripcion_ca.min' => 'El campo descripción catalán debe tener al menos 5 caracteres',

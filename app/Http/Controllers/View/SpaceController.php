@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\View;
 
+use App\Models\Space;
+use App\Models\Address;
+use App\Models\SpaceType;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backoffice\GuardarSpaceRequest;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class SpaceController extends Controller
 {
@@ -29,11 +33,28 @@ class SpaceController extends Controller
      */
     public function store(GuardarSpaceRequest $request)
     {
-        echo "estoy en function store() de SpaceController";
-        
-        echo 'nombre = '.$request->input('name').'<br>';
-        echo 'nombre = '.$request->name.'<br>';
-        echo 'nombre = '.request('name'); 
+        // echo "estoy en function store() de SpaceController";
+        // echo 'nombre = '.$request->input('name').'<br>';
+        // echo 'nombre = '.$request->name.'<br>';
+        // echo 'nombre = '.request('name'); 
+        Space::create([
+            'name' => $request->nombre,
+            'regNumber' => $request->regNumber,
+            'observation_CA' => $request->descripcion_ca,
+            'observation_ES' => $request->descripcion_es,
+            'observation_EN' => $request->descripcion_en,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'website' => $request->website,
+            'accesstype' => strtolower($request->accesstype),
+            'totalScore'=> 0,
+            'countScore'=> 0,
+            'address_id' => Address::inRandomOrder()->first()->id,
+            'space_type_id' => SpaceType::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
+        ]);
+
+        return back();
         // $request->validate([
         //     'name' => 'required|unique:spaces|min:5|max:255',
         // ]);
