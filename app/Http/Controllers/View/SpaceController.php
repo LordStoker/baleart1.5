@@ -17,7 +17,16 @@ class SpaceController extends Controller
      */
     public function index()
     {
-        return ('Hola Mundo Cruel');
+        
+        // $spaces = Space::all();  
+        //$spaces = Space::find([1,3]);
+        $spaces = Space::where('accessType','=','n')->get(); // Where status=n
+
+        dd($spaces);
+        
+
+
+        
     }
 
     /**
