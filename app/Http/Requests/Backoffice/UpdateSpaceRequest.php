@@ -6,7 +6,7 @@ use App\Rules\Uppercase;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class GuardarSpaceRequest extends FormRequest
+class UpdateSpaceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class GuardarSpaceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:5', 'max:100', Rule::unique('spaces')->ignore($this->route('space'))],
-            'regNumber' => ['required', 'string', 'min:4', 'max:10', Rule::unique('spaces')->ignore($this->route('space'))],
-            'regNumber'=> 'required|unique:spaces|min:4|max:10',
+            'name' => ['required', 'string', 'min:5', 'max:100',],
+            'regNumber' => ['required', 'string', 'min:4', 'max:10'],
             'observation_CA' => 'required|string|min:5|max:3000',
             'observation_ES' => 'required|string|min:5|max:3000',
             'observation_EN' => 'required|string|min:5|max:3000',

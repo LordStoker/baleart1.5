@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\View;
 
+use App\Models\User;
 use App\Models\Space;
 use App\Models\Address;
 use App\Models\SpaceType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backoffice\UpdateSpaceRequest;
 use App\Http\Requests\Backoffice\GuardarSpaceRequest;
-use App\Models\User;
 
 class SpaceController extends Controller
 {
@@ -20,9 +21,14 @@ class SpaceController extends Controller
         
         // $spaces = Space::all();  
         //$spaces = Space::find([1,3]);
-        $spaces = Space::where('accessType','=','n')->get(); // Where status=n
+        //$spaces = Space::where('accessType', 'n')->get(); // Where accessType n
+        //$spaces = Space::where('accessType','n')->where('id','>',2)->first(); // Where (posted = not) AND (id > 2); 
+        //$spaces = Space::where('accessType','n')->where('id','>',2)->get();
+        $spaces = Space::orderBy('updated_at', 'desc')->get(); //Muestra todos los espacios ordenados por fecha de actualización
+        //$spaces = Space::pluck('id', 'name'); // Devuelve un array con los nombres de los espacios y su id
+        //dd($spaces);
 
-        dd($spaces);
+        return view ('space.index', compact('spaces'));
         
 
 
@@ -47,15 +53,15 @@ class SpaceController extends Controller
         // echo 'nombre = '.$request->name.'<br>';
         // echo 'nombre = '.request('name'); 
         Space::create([
-            'name' => $request->nombre,
+            'name' => $request->name,
             'regNumber' => $request->regNumber,
-            'observation_CA' => $request->descripcion_ca,
-            'observation_ES' => $request->descripcion_es,
-            'observation_EN' => $request->descripcion_en,
+            'observation_CA' => $request->observation_CA,
+            'observation_ES' => $request->observation_ES,
+            'observation_EN' => $request->observation_EN,
             'email' => $request->email,
             'phone' => $request->phone,
             'website' => $request->website,
-            'accesstype' => strtolower($request->accesstype),
+            'accessType' => strtolower($request->accesstype),
             'totalScore'=> 0,
             'countScore'=> 0,
             'address_id' => Address::inRandomOrder()->first()->id,
@@ -74,26 +80,30 @@ class SpaceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Space $space)
     {
-        //
+        //$space = Space::find($id);
+        //$space = Space::findorfail($id);
+
+        return view('space.show', compact('space'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Space $space)
     {
-        //
+        return view('space.edit', compact('space'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSpaceRequest $request, Space $space)
     {
-        //
-    }
+        $space->update($request->all());
+        return back();
+    }   
 
     /**
      * Remove the specified resource from storage.
