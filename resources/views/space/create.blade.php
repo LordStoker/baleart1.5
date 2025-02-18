@@ -13,6 +13,11 @@
     @else
         <h2>No tenim cap error</h2> 
     @endif
+    @if (session('status'))
+        <div class="alert alert-primary role='alert'">
+            {{ session('status') }}
+        </div>
+    @endif
 
     {{--  @if ($errors->any())
       <div class="alert alert-danger">
@@ -75,9 +80,9 @@
         <div>{{$message}}</div><br />
         @enderror   
 
-        <label for="accesstype">AccesType</label>
-        <input type="text" style="@error('accesstype') border-color:RED; @enderror" name="accesstype" />
-        @error('accesstype')
+        <label for="accessType">AccesType</label>
+        <input type="text" style="@error('accessType') border-color:RED; @enderror" name="accessType" />
+        @error('accessType')
         <div>{{$message}}</div><br />
         @enderror   
          

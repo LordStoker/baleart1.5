@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\View;
 
 use App\Models\User;
+use App\Models\Image;
 use App\Models\Space;
 use App\Models\Address;
+use App\Models\Comment;
+use App\Models\Service;
+use App\Models\Modality;
 use App\Models\SpaceType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -61,15 +65,17 @@ class SpaceController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'website' => $request->website,
-            'accessType' => strtolower($request->accesstype),
+            'accessType' => strtolower($request->accessType),
             'totalScore'=> 0,
             'countScore'=> 0,
             'address_id' => Address::inRandomOrder()->first()->id,
             'space_type_id' => SpaceType::inRandomOrder()->first()->id,
+            'modalities' => Modality::inRandomOrder()->first()->id,
+            'services' => Service::inRandomOrder()->first()->id,    
             'user_id' => User::inRandomOrder()->first()->id,
         ]);
 
-        return back();
+        return redirect()->route('space.index')->with('status', 'Espacio creado');
         // $request->validate([
         //     'name' => 'required|unique:spaces|min:5|max:255',
         // ]);
@@ -102,14 +108,27 @@ class SpaceController extends Controller
     public function update(UpdateSpaceRequest $request, Space $space)
     {
         $space->update($request->all());
-        return back();
+        return back()->with('status', 'Espacio actualizado');
     }   
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Space $space)
     {
-        //
+        $comments = Comment::where('space_id', $space->id)->get(); //Recorre todas las imágenes de todos los comentarios y todos los comentarios del espacio y los va borrando
+        foreach ($comments as $comment) {
+            $images = Image::where('comment_id', $comment->id)->get();
+            foreach ($images as $image) {
+                $image->delete();
+            }
+            $comment->delete();
+        }
+
+        $space->services()->detach();
+        $space->modalities()->detach();
+
+        $space->delete();
+        return back()->with('status', 'Espacio eliminado');
     }
 }
