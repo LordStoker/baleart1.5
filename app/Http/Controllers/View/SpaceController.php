@@ -75,7 +75,7 @@ class SpaceController extends Controller
             'user_id' => User::inRandomOrder()->first()->id,
         ]);
 
-        return redirect()->route('space.index')->with('status', 'Espacio creado');
+        return redirect()->route('space.index')->with('status', '<h1>Espacio creado</h1>');
         // $request->validate([
         //     'name' => 'required|unique:spaces|min:5|max:255',
         // ]);
@@ -108,7 +108,7 @@ class SpaceController extends Controller
     public function update(UpdateSpaceRequest $request, Space $space)
     {
         $space->update($request->all());
-        return back()->with('status', 'Espacio actualizado');
+        return back()->with('status', '<h1>Espacio actualizado</h1>');
     }   
 
     /**
@@ -129,6 +129,6 @@ class SpaceController extends Controller
         $space->modalities()->detach();
 
         $space->delete();
-        return back()->with('status', 'Espacio eliminado');
+        return back()->with('status', '<h1>Espacio eliminado</h1>');
     }
 }

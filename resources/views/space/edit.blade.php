@@ -6,17 +6,17 @@
     <title>Editar Space</title>
 </head>
 <body>
-    @if (count($errors->all()) === 1)
+    {{-- @if (count($errors->all()) === 1)
         <h2>Tenim 1 error</h2>
     @elseif (count($errors->all()) > 1)
         <h2>Tenim multiples errors</h2>
     @else
         <h2>No tenim cap error</h2> 
-    @endif
-
+    @endif --}}
+    @include('components.alert')    
     @if (session('status'))
     <div class="alert alert-primary role='alert'">
-        {{ session('status') }}
+        {!!session('status') !!}
     </div>
 @endif
 
