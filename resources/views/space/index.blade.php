@@ -13,8 +13,14 @@
         {!! session('status') !!}
     </div>
 @endif
+
+     <!-- Llamada a un class component -->
+     {{-- @component('components.messages', ['type' => 'danger'])
+     @endcomponent --}}
+     <x-messages type="danger"/>
 <div class="row row-cols-1 row-cols-md-3 g-4 ">
-    @each('components.card-spaces',$spaces,'space');    
+    @each('components.card-spaces',$spaces,'space')
+    {{$spaces->links()}}    
 </div>
 
 </body>

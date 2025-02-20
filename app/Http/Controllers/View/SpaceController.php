@@ -28,7 +28,7 @@ class SpaceController extends Controller
         //$spaces = Space::where('accessType', 'n')->get(); // Where accessType n
         //$spaces = Space::where('accessType','n')->where('id','>',2)->first(); // Where (posted = not) AND (id > 2); 
         //$spaces = Space::where('accessType','n')->where('id','>',2)->get();
-        $spaces = Space::orderBy('updated_at', 'desc')->get(); //Muestra todos los espacios ordenados por fecha de actualización
+        $spaces = Space::orderBy('updated_at', 'desc')->paginate(6); // Muestra todos los espacios ordenados por fecha de actualización en orden descendente
         //$spaces = Space::pluck('id', 'name'); // Devuelve un array con los nombres de los espacios y su id
         //dd($spaces);
 
@@ -56,7 +56,7 @@ class SpaceController extends Controller
         // echo 'nombre = '.$request->input('name').'<br>';
         // echo 'nombre = '.$request->name.'<br>';
         // echo 'nombre = '.request('name'); 
-        Space::create([
+        $space = Space::create([
             'name' => $request->name,
             'regNumber' => $request->regNumber,
             'observation_CA' => $request->observation_CA,
@@ -70,10 +70,25 @@ class SpaceController extends Controller
             'countScore'=> 0,
             'address_id' => Address::inRandomOrder()->first()->id,
             'space_type_id' => SpaceType::inRandomOrder()->first()->id,
-            'modalities' => Modality::inRandomOrder()->first()->id,
-            'services' => Service::inRandomOrder()->first()->id,    
             'user_id' => User::inRandomOrder()->first()->id,
         ]);
+            // Relación Many-to-Many con 'modalities'
+            $modalities = Modality::inRandomOrder()->limit(4)->get();
+            if ($modalities->isNotEmpty()) {
+                $space->modalities()->attach($modalities->pluck('id')->toArray(), [
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+
+            // Relación Many-to-Many con 'services'
+            $services = Service::inRandomOrder()->limit(4)->get();
+            if ($services->isNotEmpty()) {
+                $space->services()->attach($services->pluck('id')->toArray(), [
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
 
         return redirect()->route('space.index')->with('status', '<h1>Espacio creado</h1>');
         // $request->validate([

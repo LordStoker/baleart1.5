@@ -89,6 +89,6 @@
     
         <input type="submit" value="Crear" >
     </form>
-    @dd($errors)
+
 </body>
 </html>
