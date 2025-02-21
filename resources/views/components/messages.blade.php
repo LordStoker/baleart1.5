@@ -1,4 +1,9 @@
-<div class="alert alert-{{$type}}">
-    <h1 class="alert-heading" >¡{{$type}} Este es el título!</h1>
-    <p>Este es un aviso primary. Puedes poner tantas líneas necesites.</p>
+<div class="alert alert-{{$type}}" style="{{$attributes["style"]}}">
+    {{$title}}
+    {{$majuscules($mayusculas)}}
+    <div style="background-color:blue; color:chartreuse">
+        <p>{{$slot}}</p>
+    </div>    
 </div>
+
+

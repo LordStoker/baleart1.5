@@ -1,7 +1,7 @@
 
 
-<div class="block rounded-lg bg-white shadow-secondary-1">
-    <div class="p-6 text-surface">
+
+    <div class="p-6 text-surface mb-4">
         <h5 class="mb-2 text-xl font-medium leading-tight">ID: {{ $space->id }}</h5>
         <h3 class="mb-2 text-xl font-medium leading-tight">Nombre: {{ $space->name }}</h3>
         <p class="mb-4 text-base">Nº Registro: {{ $space->regNumber }}</p>
@@ -30,4 +30,4 @@
            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" >Borrar</button>
         </form>
     </div>
-</div>
+

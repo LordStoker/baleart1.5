@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Space</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
-    <div class="row row-cols-1 row-cols-md-3 g-4 ">
-        @include('components.card-spaces',['space' => $space])    
+<x-app-layout>
+    <!-- Header de listado de Spaces -->
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Espacio') }} {{ $space->name }}
+        </h2>
+    </x-slot>
+    @if (session('status'))
+    <div class="alert alert-primary role='alert'">
+        {!! session('status') !!}
     </div>
+@endif
 
-
-</body>
-</html>
+<!-- Espacio -->
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 mb-2">
+                    <x-card-spaces :space="$space" />
+                    {{-- @include('components.card-spaces',['space' => $space])  --}}
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
