@@ -1,7 +1,5 @@
 @if (count($errors->all()) > 1)
 <h2>Tenim multiples errors</h2>
-@else
-<h2>No tenim cap error</h2> 
 @endif
 
 {{--  @if ($errors->any())

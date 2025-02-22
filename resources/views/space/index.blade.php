@@ -5,14 +5,20 @@
             {{ __('Listado de Espacios') }}
         </h2>
     </x-slot>
-    @if (session('status'))
-    <div class="alert alert-primary role='alert'">
-        {!! session('status') !!}
-    </div>
-@endif
+
 
 <!-- Listado de Espacios -->
     <div class="py-12">
+        @if (session('status'))
+            <div id="status-message" class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{!! session('status') !!}</span>
+            </div>
+            <script>
+                setTimeout(function() {
+                    document.getElementById('status-message').style.display = 'none';
+                }, 3000);
+            </script>
+        @endif
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 mb-2">

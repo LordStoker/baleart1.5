@@ -6,14 +6,14 @@
     <title>Crear Space</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+{{-- @dd($modalities, $services, $spaceTypes) --}}
 <body>
-    @include('components.alert')    
+    {{-- @include('components.alert')     --}}
     @if (session('status'))
     <div class="alert alert-primary role='alert'">
         {!!session('status') !!}
     </div>
 @endif
-<h3>Crear Space</h3>
 
 <form action="{{ route('space.store') }}" method="post">
     @csrf <!-- Security Token --> <!-- Cambio de method a 'PUT', en caso contrario llamaría al show -->
@@ -55,6 +55,24 @@
         @error('observation_EN')
         <div>{{$message}}</div><br />
         @enderror
+    </div>
+
+    <div class="mb-3">
+        <label for="modalities">Modalidades</label>
+        <select name="modalities" class="mt-1 block w-full rounded-lg">
+        @foreach ($modalities as $modality)
+            <option value="{{$modality->id}}">{{$modality->description_ES}}</option>
+        @endforeach
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label for="services">Servicios</label>
+        <select name="services" class="mt-1 block w-full rounded-lg">
+        @foreach ($services as $service)
+            <option value="{{$service->id}}">{{$service->description_ES}}</option>
+        @endforeach
+        </select>
     </div>
 
     <div class="mb-3">

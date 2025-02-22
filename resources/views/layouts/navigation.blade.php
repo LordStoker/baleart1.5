@@ -11,11 +11,28 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-10 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                 <!-- Links para Espacios -->
+                 <div class="hidden space-x-10 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('space.index')" :active="request()->routeIs('space.index')">
+                        {{ __('Espacios') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-10 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('space.create')" :active="request()->routeIs('space.create')">
+                        {{ __('Crear Espacio') }}
+                    </x-nav-link>
+                </div>
+
+
+                <!-- Links para Usuarios -->
+                {{-- <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
+                    {{ __('Usuarios') }}
+                </x-nav-link> --}}
             </div>
 
             <!-- Settings Dropdown -->
@@ -71,6 +88,24 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('space.index')" :active="request()->routeIs('space.index')">
+                {{ __('Espacios') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('space.create')" :active="request()->routeIs('space.create')">
+                {{ __('Crear Espacio') }}
+            </x-responsive-nav-link>
+        </div>
+
+        {{-- <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
+                {{ __('Usuarios') }}
+            </x-responsive-nav-link>
+        </div> --}}
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

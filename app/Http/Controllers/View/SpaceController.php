@@ -44,7 +44,10 @@ class SpaceController extends Controller
      */
     public function create()
     {
-        return view ('space.create');
+        $modalities = Modality::all();
+        $services = Service::all();
+        $spaceTypes = SpaceType::all();
+        return view ('space.create', compact('modalities', 'services', 'spaceTypes'));
     }
 
     /**
@@ -52,10 +55,7 @@ class SpaceController extends Controller
      */
     public function store(GuardarSpaceRequest $request)
     {
-        // echo "estoy en function store() de SpaceController";
-        // echo 'nombre = '.$request->input('name').'<br>';
-        // echo 'nombre = '.$request->name.'<br>';
-        // echo 'nombre = '.request('name'); 
+
         $space = Space::create([
             'name' => $request->name,
             'regNumber' => $request->regNumber,
@@ -70,10 +70,10 @@ class SpaceController extends Controller
             'countScore'=> 0,
             'address_id' => Address::inRandomOrder()->first()->id,
             'space_type_id' => SpaceType::inRandomOrder()->first()->id,
-            'user_id' => User::inRandomOrder()->first()->id,
+            'user_id' => auth()->id(),
         ]);
             // Relación Many-to-Many con 'modalities'
-            $modalities = Modality::inRandomOrder()->limit(4)->get();
+            $modalities = $request->modalities;
             if ($modalities->isNotEmpty()) {
                 $space->modalities()->attach($modalities->pluck('id')->toArray(), [
                     'created_at' => now(),
@@ -82,7 +82,7 @@ class SpaceController extends Controller
             }
 
             // Relación Many-to-Many con 'services'
-            $services = Service::inRandomOrder()->limit(4)->get();
+            $services =  $request->services;
             if ($services->isNotEmpty()) {
                 $space->services()->attach($services->pluck('id')->toArray(), [
                     'created_at' => now(),

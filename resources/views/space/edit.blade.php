@@ -1,33 +1,18 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Space</title>
-    
-</head>
-<body>
-    {{-- @if (count($errors->all()) === 1)
-        <h2>Tenim 1 error</h2>
-    @elseif (count($errors->all()) > 1)
-        <h2>Tenim multiples errors</h2>
-    @else
-        <h2>No tenim cap error</h2> 
-    @endif --}}
+<x-app-layout>
 
-    {{--  @if ($errors->any())
-      <div class="alert alert-danger">
-          <ul>
-              @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-              @endforeach
-          </ul>
-      </div>
-  @endif --}}
-  <div class="row row-cols-1 row-cols-md-3 g-4 ">
-    @include('components.editcard-spaces',['space' => $space])    
-</div>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Editar un Espacio') }}
+        </h2>
+    </x-slot>
 
-    {{-- @dd($errors) --}}
-</body>
-</html>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 ">
+                    <x-editcard-spaces :space="$space"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
