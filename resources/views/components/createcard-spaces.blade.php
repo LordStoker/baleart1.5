@@ -33,9 +33,10 @@
         @enderror   
     </div>
 
+
     <div class="mb-3">
         <label for="observation_CA">Descripción_CA</label>
-        <textarea type="text" class="mt-1 block w-full rounded-lg" style="@error('observation_CA') border-color:RED; @enderror" name="observation_CA"></textarea>
+        <textarea  type="text" class="editor mt-1 block w-full rounded-lg" style="@error('observation_CA') border-color:RED; @enderror" name="observation_CA"></textarea>
         @error('observation_CA')
         <div>{{$message}}</div><br />
         @enderror
@@ -43,7 +44,7 @@
     
     <div class="mb-3">
         <label for="observation_ES">Descripción_ES</label>
-        <textarea type="text" class="mt-1 block w-full rounded-lg" style="@error('observation_ES') border-color:RED; @enderror" name="observation_ES"></textarea>
+        <textarea id="editor" type="text" class="editor mt-1 block w-full rounded-lg" style="@error('observation_ES') border-color:RED; @enderror" name="observation_ES"></textarea>
         @error('observation_ES')
         <div>{{$message}}</div><br />
         @enderror 
@@ -51,15 +52,15 @@
 
     <div class="mb-3">
         <label for="observation_EN">Descripción_EN</label>
-        <textarea type="text" class="mt-1 block w-full rounded-lg" style="@error('observation_EN') border-color:RED; @enderror" name="observation_EN"></textarea>
+        <textarea id="editor" type="text" class="editor mt-1 block w-full rounded-lg" style="@error('observation_EN') border-color:RED; @enderror" name="observation_EN"></textarea>
         @error('observation_EN')
         <div>{{$message}}</div><br />
         @enderror
     </div>
 
     <div class="mb-3">
-        <label for="modalities">Modalidades</label>
-        <select name="modalities" class="mt-1 block w-full rounded-lg">
+        <label for="modalities">Modalidades (CTRL + Click para seleccionar varios)</label>
+        <select name="modalities[]" class="mt-1 block w-full rounded-lg" multiple>
         @foreach ($modalities as $modality)
             <option value="{{$modality->id}}">{{$modality->description_ES}}</option>
         @endforeach
@@ -67,10 +68,19 @@
     </div>
     
     <div class="mb-3">
-        <label for="services">Servicios</label>
-        <select name="services" class="mt-1 block w-full rounded-lg">
+        <label for="services">Servicios (CTRL + Click para seleccionar varios)</label>
+        <select name="services[]" class="mt-1 block w-full rounded-lg" multiple>
         @foreach ($services as $service)
             <option value="{{$service->id}}">{{$service->description_ES}}</option>
+        @endforeach
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="spaceType">Tipo de espacio</label>
+        <select name="spaceType" class="mt-1 block w-full rounded-lg">
+        @foreach ($spaceTypes as $spaceType)
+            <option value="{{$spaceType->id}}">{{$spaceType->description_ES}}</option>
         @endforeach
         </select>
     </div>

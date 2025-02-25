@@ -8,11 +8,19 @@
 </head>
 <body>
     @include('components.alert')    
-    @if (session('status'))
-    <div class="alert alert-primary role='alert'">
-        {!!session('status') !!}
-    </div>
-@endif
+    <div class="py-12">
+        @if (session('status'))
+            <div id="status-message" class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{!! session('status') !!}</span>
+            </div>
+            <script>
+                setTimeout(function() {
+                    document.getElementById('status-message').style.display = 'none';
+                }, 3000);
+            </script>
+        @endif
+    
+
 
 <form action="{{ route('space.update', ['space' => $space->id]) }}" method="post">
     @csrf <!-- Security Token --> <!-- Cambio de method a 'PUT', en caso contrario llamaría al show -->
@@ -33,17 +41,19 @@
         @enderror   
     </div>
 
+
     <div class="mb-3">
         <label for="observation_CA">Descripción_CA</label>
-        <textarea type="text" class="mt-1 block w-full rounded-lg" style="@error('observation_CA') border-color:RED; @enderror" name="observation_CA">{{$space->observation_CA}}</textarea>
+        <textarea  type="text" class="editor mt-1 block w-full rounded-lg " style="@error('observation_CA') border-color:RED; @enderror" name="observation_CA">{!! $space->observation_CA !!}</textarea>
         @error('observation_CA')
         <div>{{$message}}</div><br />
         @enderror
     </div>
+
     
     <div class="mb-3">
         <label for="observation_ES">Descripción_ES</label>
-        <textarea type="text" class="mt-1 block w-full rounded-lg" style="@error('observation_ES') border-color:RED; @enderror" name="observation_ES">{{$space->observation_ES}}</textarea>
+        <textarea  type="text" class="editor mt-1 block w-full rounded-lg editor" style="@error('observation_ES') border-color:RED; @enderror" name="observation_ES">{!! $space->observation_ES !!}</textarea>
         @error('observation_ES')
         <div>{{$message}}</div><br />
         @enderror 
@@ -51,10 +61,39 @@
 
     <div class="mb-3">
         <label for="observation_EN">Descripción_EN</label>
-        <textarea type="text" class="mt-1 block w-full rounded-lg" style="@error('observation_EN') border-color:RED; @enderror" name="observation_EN">{{$space->observation_EN}}</textarea>
+        <textarea id="editor" type="text" class="mt-1 block w-full rounded-lg editor" style="@error('observation_EN') border-color:RED; @enderror" name="observation_EN">{!! $space->observation_EN !!}</textarea>
         @error('observation_EN')
         <div>{{$message}}</div><br />
         @enderror
+    </div>
+
+    <div class="mb-3">
+        <label for="modalities">Modalidades (CTRL + Click para seleccionar varios)</label>
+        <select name="modalities[]" class="mt-1 block w-full rounded-lg" multiple>
+        @foreach ($modalities as $modality)
+            <option value="{{$modality->id}}" {{ in_array($modality->id, $space->modalities->pluck('id')->toArray()) ? 'selected' : '' }}>{{$modality->description_ES}}</option>
+        @endforeach
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label for="services">Servicios (CTRL + Click para seleccionar varios)</label>
+        <select name="services[]" class="mt-1 block w-full rounded-lg" multiple>
+        @foreach ($services as $service)
+            <option value="{{$service->id}}" {{ in_array($service->id, $space->services->pluck('id')->toArray()) ? 'selected' : '' }}>{{$service->description_ES}}</option>
+        @endforeach
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="spaceType">Tipo de espacio</label>
+        <select name="spaceType" class="mt-1 block w-full rounded-lg">
+            @foreach ($spaceTypes as $spaceType)
+                <option value="{{ $spaceType->id }}" {{ $spaceType->id == $space->space_type_id ? 'selected' : '' }}>
+                    {{ $spaceType->description_ES }}
+                </option>
+            @endforeach
+        </select>
     </div>
 
     <div class="mb-3">
@@ -83,12 +122,14 @@
     <div class="mb-3">
         <label for="accessType">Acceso para minusválidos</label>
         <select class="form-label rounded-lg" name="accessType">
-            <option value="n" >No</option>
-            <option value="y">Sí</option>
-            <option value="p">Parcial</option>
+            <option value="n" {{ $space->accessType == 'n' ? 'selected' : '' }}>No</option>
+            <option value="y" {{ $space->accessType == 'y' ? 'selected' : '' }}>Sí</option>
+            <option value="p" {{ $space->accessType == 'p' ? 'selected' : '' }}>Parcial</option>
         </select>
+    </div>
   
     </div>
+</div>
      
 
     <input type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" value="Actualizar" >

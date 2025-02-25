@@ -73,6 +73,7 @@ class UpdateSpaceRequest extends FormRequest
             'website.max' => 'El campo web no puede tener más de 255 caracteres',
             'accessType.required' => 'El campo tipo de acceso es obligatorio',
             'accessType.in' => 'El campo tipo de acceso debe ser y, n o p',
+            'address.required' => 'El campo dirección es obligatorio',
 
 
         ];

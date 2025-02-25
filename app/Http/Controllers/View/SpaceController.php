@@ -28,7 +28,7 @@ class SpaceController extends Controller
         //$spaces = Space::where('accessType', 'n')->get(); // Where accessType n
         //$spaces = Space::where('accessType','n')->where('id','>',2)->first(); // Where (posted = not) AND (id > 2); 
         //$spaces = Space::where('accessType','n')->where('id','>',2)->get();
-        $spaces = Space::orderBy('updated_at', 'desc')->paginate(6); // Muestra todos los espacios ordenados por fecha de actualización en orden descendente
+        $spaces = Space::orderby('updated_at', 'desc')->paginate(6); // Muestra todos los espacios ordenados por fecha de actualización en orden descendente
         //$spaces = Space::pluck('id', 'name'); // Devuelve un array con los nombres de los espacios y su id
         //dd($spaces);
 
@@ -73,22 +73,18 @@ class SpaceController extends Controller
             'user_id' => auth()->id(),
         ]);
             // Relación Many-to-Many con 'modalities'
-            $modalities = $request->modalities;
-            if ($modalities->isNotEmpty()) {
-                $space->modalities()->attach($modalities->pluck('id')->toArray(), [
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ]);
-            }
+            $space->modalities()->attach($request->modalities, [
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+            
 
             // Relación Many-to-Many con 'services'
-            $services =  $request->services;
-            if ($services->isNotEmpty()) {
-                $space->services()->attach($services->pluck('id')->toArray(), [
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ]);
-            }
+            $space->services()->attach($request->services, [
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+            
 
         return redirect()->route('space.index')->with('status', '<h1>Espacio creado</h1>');
         // $request->validate([
@@ -113,8 +109,10 @@ class SpaceController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Space $space)
-    {
-        return view('space.edit', compact('space'));
+    {   $modalities = Modality::all();
+        $services = Service::all();
+        $spaceTypes = SpaceType::all();
+        return view('space.edit', compact('space', 'modalities', 'services', 'spaceTypes'));
     }
 
     /**
