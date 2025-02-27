@@ -2,7 +2,7 @@
     <!-- Header de listado de Spaces -->
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Listado de Espacios') }}
+            {{ __('Listado de Comentarios') }}
         </h2>
     </x-slot>
 
@@ -24,8 +24,8 @@
                 <div class="p-6 text-gray-900 mb-2">
                     
                     <!-- Se muestran los elementos en forma de Card -->
-                    @each('components.card-spaces',$spaces,'space')
-                    {{ $spaces->links() }} <!-- Paginación -->
+                    @each('components.card-comments',$comments,'comment')
+                    {{ $comments->links() }} <!-- Paginación -->
 
                 </div>
             </div>

@@ -27,12 +27,22 @@
                         {{ __('Crear Espacio') }}
                     </x-nav-link>
                 </div>
-
-
                 <!-- Links para Usuarios -->
-                {{-- <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
-                    {{ __('Usuarios') }}
-                </x-nav-link> --}}
+                <div class="hidden space-x-10 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
+                        {{ __('Usuarios') }}
+                    </x-nav-link> 
+                </div>
+                <div class="hidden space-x-10 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('user.create')" :active="request()->routeIs('user.create')">
+                        {{ __('Crear Usuario') }}
+                    </x-nav-link> 
+                </div>
+                <div class="hidden space-x-10 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('comment.index')" :active="request()->routeIs('comment.index')">
+                        {{ __('Comentarios') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -101,11 +111,11 @@
             </x-responsive-nav-link>
         </div>
 
-        {{-- <div class="pt-2 pb-3 space-y-1">
+         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                 {{ __('Usuarios') }}
             </x-responsive-nav-link>
-        </div> --}}
+        </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

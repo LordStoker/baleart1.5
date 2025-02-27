@@ -14,8 +14,9 @@ use App\Models\SpaceType;
 use App\Models\Municipality;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\View\UserController;
 use App\Http\Controllers\View\SpaceController;
-use App\Http\Controllers\View\ServiceController;
+use App\Http\Controllers\View\CommentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,6 +44,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/space', SpaceController::class);
+    Route::resource('/user', UserController::class);
+    Route::resource('/comment', CommentController::class);
 });
 
 //RUTAS DE PRUEBA PARA VER EL FUNCIONAMIENTO DE RUTAS

@@ -69,7 +69,7 @@ class SpaceController extends Controller
             'totalScore'=> 0,
             'countScore'=> 0,
             'address_id' => Address::inRandomOrder()->first()->id,
-            'space_type_id' => SpaceType::inRandomOrder()->first()->id,
+            'space_type_id' => $request->spaceType,
             'user_id' => auth()->id(),
         ]);
             // Relación Many-to-Many con 'modalities'
@@ -120,9 +120,22 @@ class SpaceController extends Controller
      */
     public function update(UpdateSpaceRequest $request, Space $space)
     {
+       
+
+        // Actualizar relación Many-to-Many con 'modalities'
+        $space->modalities()->sync($request->modalities, [
+            'updated_at' => now()
+        ]);
+
+        // Actualizar relación Many-to-Many con 'services'
+        $space->services()->sync($request->services, [
+            'updated_at' => now()
+        ]);
+
         $space->update($request->all());
+
         return back()->with('status', '<h1>Espacio actualizado</h1>');
-    }   
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -142,6 +155,6 @@ class SpaceController extends Controller
         $space->modalities()->detach();
 
         $space->delete();
-        return back()->with('status', '<h1>Espacio eliminado</h1>');
+        return view('space.index')->with('status', '<h1>Espacio eliminado</h1>');
     }
 }

@@ -41,10 +41,10 @@ class GuardarSpaceRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'El campo name es obligatorio',
-            'name.string' => 'El campo name debe ser un texto',
-            'name.max' => 'El campo name no puede tener más de 100 caracteres',
-            'name.min' => 'El campo name debe tener al menos 5 caracteres',
+            'name.required' => 'El campo nombre es obligatorio',
+            'name.string' => 'El campo nombre debe ser un texto',
+            'name.max' => 'El campo nombre no puede tener más de 100 caracteres',
+            'name.min' => 'El campo nombre debe tener al menos 5 caracteres',
             'regNumber.required' => 'El campo registro es obligatorio',
             'regNumber.unique' => 'El campo registro ya está en uso',
             'regNumber.min' => 'El campo registro debe tener al menos 4 caracteres',
